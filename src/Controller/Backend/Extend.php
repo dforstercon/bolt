@@ -69,6 +69,9 @@ class Extend extends BackendBase
         $c->get('/packageInfo', 'packageInfo')
             ->bind('packageInfo');
 
+        $c->get('/runScript/{eventName}', 'runScript')
+            ->bind('runScript');
+
         $c->get('/generateTheme', 'generateTheme')
             ->bind('generateTheme');
     }
@@ -431,6 +434,24 @@ class Extend extends BackendBase
         }
 
         return $this->getJsonException(new PackageManagerException($this->manager()->getOutput(), $response));
+    }
+
+    /**
+     * Run a Composer event script.
+     *
+     * @param string $eventName A script name from \Composer\Installer\PackageEvents
+     *
+     * @return Response
+     */
+    public function runScript($eventName)
+    {
+        try {
+            $this->manager()->runScript($eventName);
+        } catch (\Exception $e) {
+            return $this->getJsonException($e);
+        }
+
+        return new Response($this->manager()->getOutput());
     }
 
     /**
