@@ -102,5 +102,11 @@
         "branch-alias": {
             "dev-release/3.3": "3.3.x-dev"
         }
+    },
+    "repositories": {
+        "ide-tools": {
+            "type": "git",
+            "url": "https://github.com/bolt/ide-tools.git"
+        }
     }
 }
